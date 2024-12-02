@@ -28,15 +28,6 @@ export const useSubscriberStore = defineStore('subscriber', () => {
     subscribers.value = people
   }
 
-  function setNewQuota(quota, subscriber) {
-    // Here we should handle the call to the API to set the new quota
-    try {
-      console.log('New quota:', quota, 'for subscriber:', subscriber)
-    } catch (error) {
-      console.error('Error setting new quota:', error)
-    }
-  }
-
   function setIncrementReasons(reasons) {
     incrementReasons.value = reasons;
   }
@@ -92,17 +83,28 @@ export const useSubscriberStore = defineStore('subscriber', () => {
     }
   }
 
-  async function saveQuotaToAPI(quotaModification) {
+  async function saveQuotaToAPI(quotaModification,forceError = false) {
     // Here we should handle the call to the API to save the quota modification
     
     try {
+      if(forceError){
+        throw new Error('Forced error for testing');
+      }
       setNewSubscriberQuota(quotaModification.subscriberId, quotaModification.newQuota)
-      setMessageAfterSavingQuota('Quota saved successfully')
+      setMessageAfterSavingQuota({
+        subscriberId: quotaModification.subscriberId,
+        message: `Quota saved successfully for subscriber #${quotaModification.subscriberId}`,
+        type: 'success'
+      })
       setTimeout(() => {
         setMessageAfterSavingQuota(null)
       }, 3000)
     } catch (error) {
-      setMessageAfterSavingQuota('Error saving quota modification')
+      setMessageAfterSavingQuota({
+        subscriberId: quotaModification.subscriberId,
+        message: `Error saving quota modification for subscriber #${quotaModification.subscriberId}`,
+        type: 'error'
+      })
       setTimeout(() => {
         setMessageAfterSavingQuota(null)
       }, 3000)
@@ -110,5 +112,22 @@ export const useSubscriberStore = defineStore('subscriber', () => {
     }
   }
 
-  return { selectedSubscriber, setSelectedSubscriber, quotaMax, quotaMin, subscribers, setSubscribers, getSubscribersFromAPI, getSubscribers, getSelectedSubscriber, setNewQuota, setIncrementReasons, setDecrementReasons, getDecrementReasons, getIncrementReasons, getReasonsFromAPI, saveQuotaToAPI, getMessageAfterSavingQuota}
+  return { 
+    selectedSubscriber, 
+    setSelectedSubscriber, 
+    quotaMax, 
+    quotaMin, 
+    subscribers, 
+    setSubscribers, 
+    getSubscribersFromAPI, 
+    getSubscribers, 
+    getSelectedSubscriber, 
+    setIncrementReasons, 
+    setDecrementReasons, 
+    getDecrementReasons, 
+    getIncrementReasons, 
+    getReasonsFromAPI, 
+    saveQuotaToAPI, 
+    getMessageAfterSavingQuota
+  }
 })

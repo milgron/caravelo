@@ -1,8 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --primary-color: #029DFF; /* caravelo-blue */
-  --primary-color-text: #ffffff; /* Text color for primary buttons */
-}

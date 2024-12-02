@@ -1,11 +1,13 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useSubscriberStore } from '@/stores/subscriber';
 import QuotaModal from '@/components/QuotaModal.vue';
 
+const { getSelectedSubscriber, setSelectedSubscriber, getSubscribers, getSubscribersFromAPI, saveQuotaToAPI } = useSubscriberStore();
+
 const searchQuery = ref('');
 const showModal = ref(false);
-const { getSelectedSubscriber, setSelectedSubscriber, getSubscribers, getSubscribersFromAPI, saveQuotaToAPI } = useSubscriberStore();
+const filteredSubscribers = ref([]);
 
 function searchSubscribers(event) {
   const query = event.query.toLowerCase();
@@ -13,19 +15,26 @@ function searchSubscribers(event) {
     .filter(subscriber => subscriber.name.toLowerCase().includes(query))
 }
 
-const filteredSubscribers = ref([]);
-
 function handleSelectedSubscriber() {
   setSelectedSubscriber(filteredSubscribers.value[0]);
+}
+
+function isSearchQueryValid() {
+  const query = String(searchQuery.value || '');
+  if (getSelectedSubscriber().value?.id === null || query.trim() === '' || filteredSubscribers.value.length === 0) return false;
+
+  return true;
+}
+
+async function saveQuota(quotaModification) {
+  searchQuery.value = ''
+  showModal.value = false
+  await saveQuotaToAPI(quotaModification)
 }
 
 onMounted(async() => {
   await getSubscribersFromAPI();
 })
-
-async function saveQuota(quotaModification) {
-  await saveQuotaToAPI(quotaModification);
-}
 </script>
 
 <template>
@@ -49,7 +58,7 @@ async function saveQuota(quotaModification) {
         <Button
           class="!bg-caravelo-blue hover:!bg-blue-500 !text-white !border-none w-full"
           label="Modify quota"
-          :disabled="!getSelectedSubscriber().value?.id"
+          :disabled="!isSearchQueryValid()"
           @click="showModal = true"
         />
         <QuotaModal :visible="showModal" @close="showModal = false" @saveQuota="saveQuota" />

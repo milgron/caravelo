@@ -8,17 +8,15 @@ const props = defineProps({
   visible: Boolean,
 });
 
-const quotaType = ref(null)
-const selectedReason = ref(null)
-const newQuota = ref(null)
-
 const { getSelectedSubscriber } = useSubscriberStore();
 
 const emit = defineEmits(['close', 'saveQuota']);
 
-function closeModal() {
-  emit('close');
-}
+function closeModal() { emit('close'); }
+
+const quotaType = ref(null)
+const selectedReason = ref(null)
+const newQuota = ref(null)
 
 function handleQuotaModification({updatedQuota, type}) {
   newQuota.value = updatedQuota
@@ -47,18 +45,15 @@ const isSaveButtonDisabled = computed(() => {
 </script>
 
 <template>
-  <Dialog :visible="visible" modal header="Subscriber quota" class="w-[25rem] p-0 ">
+  <Dialog :visible="visible" modal header="New subscriber quota" class="w-[25rem] p-0 ">
     <section class="flex flex-col gap-2">
-      <Message severity="info" variant="outlined" class="w-full text-xs">
-        Modifying the quota will affect the subscriber's quota. Please be careful.
-      </Message>
       <div class="pb-2 flex justify-between">
         <div class="flex items-center gap-1">
           <strong>Name:</strong>
           <span>{{ getSelectedSubscriber().value.name }}</span>
         </div>
         <div class="flex items-center gap-2">
-          <strong>Quota</strong>
+          <strong>New quota</strong>
           <QuotaField @handleQuotaModification="handleQuotaModification" />
         </div>
       </div>

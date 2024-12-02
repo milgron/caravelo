@@ -6,11 +6,12 @@ const props = defineProps({
   quotaType: String,
 });
 
-const selectedReason = ref(null);
-const emit = defineEmits(['handleReason']);
-
 const subscriberStore = useSubscriberStore();
 const { getReasonsFromAPI, getIncrementReasons, getDecrementReasons } = subscriberStore;
+
+const emit = defineEmits(['handleReason']);
+
+const selectedReason = ref(null);
 
 watch(() => selectedReason.value, () => {
   selectedReason.value ? emit('handleReason', selectedReason.value) : emit('handleReason', null)

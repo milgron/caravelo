@@ -1,10 +1,11 @@
 <script setup>
-import { ref, onMounted, watch, computed } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useSubscriberStore } from '@/stores/subscriber';
-const userQuota = ref(null);
 
 const { getSelectedSubscriber, quotaMax, quotaMin } = useSubscriberStore();
 const emit = defineEmits(['handleQuotaModification']);
+
+const userQuota = ref(null);
 
 function incrementQuota() {
   return userQuota.value < quotaMax && userQuota.value++
