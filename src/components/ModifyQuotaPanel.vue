@@ -5,7 +5,7 @@ import QuotaModal from '@/components/QuotaModal.vue';
 
 const searchQuery = ref('');
 const showModal = ref(false);
-const { getSelectedSubscriber, setSelectedSubscriber, getSubscribers, getSubscribersFromAPI } = useSubscriberStore();
+const { getSelectedSubscriber, setSelectedSubscriber, getSubscribers, getSubscribersFromAPI, saveQuotaToAPI } = useSubscriberStore();
 
 function searchSubscribers(event) {
   const query = event.query.toLowerCase();
@@ -23,6 +23,9 @@ onMounted(async() => {
   await getSubscribersFromAPI();
 })
 
+async function saveQuota(quotaModification) {
+  await saveQuotaToAPI(quotaModification);
+}
 </script>
 
 <template>
@@ -44,12 +47,12 @@ onMounted(async() => {
           optionLabel="name"
         />
         <Button
-          class="!bg-black !text-white !border-none w-full"
+          class="!bg-caravelo-blue hover:!bg-blue-500 !text-white !border-none w-full"
           label="Modify quota"
           :disabled="!getSelectedSubscriber().value?.id"
           @click="showModal = true"
         />
-        <QuotaModal :visible="showModal" @close="showModal = false" />
+        <QuotaModal :visible="showModal" @close="showModal = false" @saveQuota="saveQuota" />
       </div>
     </section>
 </template>

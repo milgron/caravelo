@@ -9,6 +9,8 @@ export default {
     extend: {
       colors: {
         'caravelo-blue': '#029DFF',
+        'primary-color': 'var(--primary-color)',
+        'primary-color-text': 'var(--primary-color-text)',
       },
     },
   }

@@ -1,10 +1,10 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { useSubscriberStore } from '@/stores/subscriber';
 const userQuota = ref(null);
 
 const { getSelectedSubscriber, quotaMax, quotaMin } = useSubscriberStore();
-const emit = defineEmits(['quotaType']);
+const emit = defineEmits(['handleQuotaModification']);
 
 function incrementQuota() {
   return userQuota.value < quotaMax && userQuota.value++
@@ -14,8 +14,14 @@ function decrementQuota() {
   return userQuota.value > quotaMin && userQuota.value--
 }
 
-computed(() => {
-  return userQuota.value < getSelectedSubscriber().value.quota ? emit('quotaType', 'decrement') : emit('quotaType', 'increment')
+watch(() => userQuota.value, () => {
+  if(userQuota.value == getSelectedSubscriber().value.quota) {
+    emit('handleQuotaModification', { type: null, updatedQuota: getSelectedSubscriber().value.quota })
+  } else if (userQuota.value < getSelectedSubscriber().value.quota) {
+    emit('handleQuotaModification', { type: 'decrement', updatedQuota: userQuota.value })
+  } else {
+    emit('handleQuotaModification', { type: 'increment', updatedQuota: userQuota.value })
+  }
 });
 
 onMounted(() => {
@@ -32,7 +38,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Hide native number input arrows */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;

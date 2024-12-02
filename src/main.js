@@ -7,6 +7,8 @@ import InputText from 'primevue/inputtext';
 import AutoComplete from 'primevue/autocomplete';
 import Message from 'primevue/message';
 import Dialog from 'primevue/dialog';
+import Listbox from 'primevue/listbox';
+import Toast from 'primevue/toast';
 
 import Aura from '@primevue/themes/aura';
 
@@ -33,4 +35,7 @@ app.component('InputText', InputText) // Register the InputText component global
 app.component('AutoComplete', AutoComplete); // Register the AutoComplete component globally
 app.component('Message', Message); // Register the Message component globally
 app.component('Dialog', Dialog); // Register the Dialog component globally
+app.component('Listbox', Listbox); // Register the Listbox component globally
+app.component('Toast', Toast); // Register the Toast component globally
+
 app.mount('#app')
