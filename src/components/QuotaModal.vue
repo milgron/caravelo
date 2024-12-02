@@ -45,14 +45,14 @@ const isSaveButtonDisabled = computed(() => {
 </script>
 
 <template>
-  <Dialog :visible="visible" modal header="New subscriber quota" class="w-[25rem] p-0 ">
+  <Dialog :visible="visible" modal header="New subscriber quota" class="w-[25rem] p-0 mx-8 lg:mx-0">
     <section class="flex flex-col gap-2">
-      <div class="pb-2 flex justify-between">
+      <div class="pb-2 flex flex-col lg:flex-rowjustify-between">
         <div class="flex items-center gap-1">
           <strong>Name:</strong>
           <span>{{ getSelectedSubscriber().value.name }}</span>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 mt-2 lg:mt-0">
           <strong>New quota</strong>
           <QuotaField @handleQuotaModification="handleQuotaModification" />
         </div>

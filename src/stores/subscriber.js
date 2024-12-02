@@ -50,7 +50,6 @@ export const useSubscriberStore = defineStore('subscriber', () => {
   // API handlers
   
   async function getSubscribersFromAPI() {
-    console.log('Getting subscribers from API')
     // Here we should handle the call to the API to get the subscribers
     const subscribersJSON = await fetch('/subscribers.json').then(res => res.json())
 

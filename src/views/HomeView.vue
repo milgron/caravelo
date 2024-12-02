@@ -4,7 +4,7 @@ import ModifyQuotaPanel from '@/components/ModifyQuotaPanel.vue';
 
 <template>
   <section class="flex flex-col items-center justify-between lg:p-12 h-screen bg-gray-100">
-    <div>
+    <div class="mt-8 lg:mt-0">
       <img src="/caravelo.svg" alt="Vue logo" class="w-24"/>
     </div>
     <ModifyQuotaPanel />

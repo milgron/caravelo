@@ -40,12 +40,10 @@ onMounted(async() => {
 </script>
 
 <template>
-  <section class="flex flex-col items-center justify-between shadow-md bg-white  rounded-md p-4 lg:h-1/3 lg:w-1/4 text-center">
-      <div>
-        <h1 class="text-xl font-bold">Modifying subscriber quota</h1>
-      </div>
-      <div class="flex flex-col items-center gap-2 w-full">
-        <label for="searchQuery" class="text-xs text-left px-1">
+  <section class="flex flex-col justify-between shadow-md bg-white  rounded-md p-4 lg:h-1/3 lg:w-1/4 mx-8 lg:mx-0 mb-8 lg:mb-0">
+      <h1 class="text-xl font-bold text-left">Modifying subscriber quota</h1>
+      <div class="flex flex-col items-center gap-2 w-full mt-8">
+        <label for="searchQuery" class="text-xs text-left">
           Please, select the subscriber you want to modify the quota for.
         </label>
         <AutoComplete 

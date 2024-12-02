@@ -19,3 +19,11 @@ watch(getMessageAfterSavingQuota(), (message) => {
   <Toast />
   <RouterView />
 </template>
+
+<style>
+@media (max-width: 768px) {
+  .p-toast {
+    width: 75% !important;
+  }
+}
+</style>
