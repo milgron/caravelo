@@ -29,6 +29,8 @@ function isSearchQueryValid() {
 async function saveQuota(quotaModification) {
   searchQuery.value = ''
   showModal.value = false
+
+  // Add true as second parameter to force error.
   await saveQuotaToAPI(quotaModification)
 }
 
